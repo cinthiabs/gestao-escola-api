@@ -1,0 +1,36 @@
+CREATE TABLE Administrador (
+    Id INT PRIMARY KEY IDENTITY,
+    Email VARCHAR(100) NOT NULL,
+    SenhaHash VARCHAR(250) NOT NULL,
+    SenhaSalt VARCHAR(250) NOT NULL,
+    Token  NVARCHAR(MAX) NULL,
+    DataExpiracaoToken DATETIME NULL,
+);
+
+CREATE TABLE Aluno (
+    Id INT PRIMARY KEY IDENTITY,
+    Nome VARCHAR(100) NOT NULL,
+    DataNascimento DATETIME NOT NULL,
+    CPF CHAR(11) NOT NULL UNIQUE,
+    Email VARCHAR(100) NOT NULL UNIQUE,
+    SenhaHash VARCHAR(250) NOT NULL,
+    SenhaSalt VARCHAR(250) NOT NULL,
+ 
+);
+
+CREATE TABLE Turma (
+    Id INT PRIMARY KEY IDENTITY,
+    Nome VARCHAR(100) NOT NULL,
+    Descricao VARCHAR(255) NULL
+);
+
+CREATE TABLE Matricula (
+    Id INT PRIMARY KEY IDENTITY,
+    AlunoId INT NOT NULL,
+    TurmaId INT NOT NULL,
+    DataMatricula DATETIME NOT NULL DEFAULT GETDATE(),
+
+    CONSTRAINT FK_Matricula_Aluno FOREIGN KEY (AlunoId) REFERENCES Aluno(Id),
+    CONSTRAINT FK_Matricula_Turma FOREIGN KEY (TurmaId) REFERENCES Turma(Id),
+    CONSTRAINT UQ_Aluno_Turma UNIQUE (AlunoId, TurmaId)
+);
