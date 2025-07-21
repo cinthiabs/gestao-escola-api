@@ -1,3 +1,5 @@
+USE DB_Gestao_Escola
+
 CREATE TABLE Administrador (
     Id INT PRIMARY KEY IDENTITY,
     Email VARCHAR(100) NOT NULL,
